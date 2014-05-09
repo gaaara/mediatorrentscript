@@ -16,8 +16,8 @@ clear
     # demander nom et mot de passe
     echo "le mot de passe doit contenir au moins 8 caractères au moin 1 chiffre et une majuscule ou caractère spécial"
     echo ""
-    read -p "Adding user now, please type your user name: " user
-    read -s -p "Enter password: " pwd
+    read -p "Entrer votre nom d'utilisateur: " user
+    read -s -p "Enter vottre mot de passe: " pwd
     echo
  
     # ajout utilisateur
