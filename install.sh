@@ -151,7 +151,6 @@ mkdir -p rtorrent/session
 
 ##permissions
 chown -R $user:$user /home/$user
-chown root:$user /home/$user
 chmod 755 /home/$user
 chmod -R a+w /home/$user/Mediastorrent/config/Conf.php
 chmod -R a+w /home/$user/Mediastorrent/log
