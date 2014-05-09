@@ -14,6 +14,8 @@ clear
     fi
  
     # demander nom et mot de passe
+    echo "le mot de passe doit contenir au moins 8 caractères au moin 1 chiffre et une majuscule ou caractère spécial"
+    echo ""
     read -p "Adding user now, please type your user name: " user
     read -s -p "Enter password: " pwd
     echo
@@ -25,7 +27,7 @@ clear
     echo "${user}:${pwd}" | chpasswd
     
     #email
-    echo "le script a besoin de votre Ã©mail en cas de perte de mot de passe exemple"
+    echo "le script a besoin de votre email en cas de perte de mot de passe exemple"
     echo ""
     read -p "votre email : " mail
     
