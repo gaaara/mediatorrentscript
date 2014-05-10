@@ -169,6 +169,7 @@ sed -i.bak "s#PHPDIR=/home/salorium/Mediastorrent/script#PHPDIR=/home/$user/Medi
 sed -i.bak "s/$debuglocalfile = false;/$debuglocalfile = true;/g;" /home/$user/Mediastorrent/config/Conf.php
 
 php /home/$user/Mediastorrent/script/preparebbd.php localhost root $pwdr
+sleep 3
 php /home/$user/Mediastorrent/script/inituser.php $user $pwd $mail  $ip/Mediastorrent seedadmin 5001
 
 service apache2 restart
