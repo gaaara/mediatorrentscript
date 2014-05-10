@@ -5,7 +5,12 @@
 #le support du script c'est ici http://forum.mediastorrent.com/index.php/Thread/9-Script-support/ 
 ##############Merci a salorium pour sons aide#################
 clear
- 
+    # Fonction d'affichage de l'erreur du mdp
+mdperreur() {
+        echo "Mot de passe invalide"
+        echo "Votre mot de passe doit contenir impérativement une majuscule, une miniscule, un chiffre et avoir une longueur minimum de 8 caractère"
+}
+
     if [ $(id -u) -ne 0 ]
     then
        echo
@@ -18,7 +23,37 @@ clear
     echo "Au moins 8 caractères avec une lettre majuscule, un chiffre / un caractère spécial."
     echo ""
     read -p "Entrer votre nom d'utilisateur: " user
-    read -s -p "Enter vottre mot de passe: " pwd
+    OK=1
+    while [ $OK -eq 1 ]; do
+     read -s -p "Entrer votre mot de passe : " pwd
+     echo
+     echo "Tesing password strength..."
+     echo
+     echo $pwd
+     if echo "$pwd" | egrep '(^.{8,}$)' > /dev/null #Si le mdp fais une longueur de 8 minimum
+      then
+       if echo "$pwd" | egrep '(.*[[:digit:]])' > /dev/null #Si le mdp contient au moins un chiffre
+        then
+         if echo "$pwd" | egrep '(.*[[:lower:]])' > /dev/null #Si le mdp contient une minuscule
+          then
+           if echo "$pwd" | egrep '(.*[[:upper:]])' > /dev/null #Si le mdp contient une majuscule
+            then
+             OK=0
+             echo "Mdp bon"
+            else
+             mdperreur #Appelle de la fonction mdperreur
+           fi
+          else
+           mdperreur
+         fi
+        else
+         mdperreur
+       fi
+      else
+       mdperreur
+     fi
+    done
+
     echo
  
     # ajout utilisateur
@@ -164,7 +199,7 @@ chmod -R a+w /home/$user/Mediastorrent/cache
 cp /home/$user/Mediastorrent/script/rtorrent /etc/init.d
 chmod a+x /etc/init.d/rtorrent
 cp /home/$user/Mediastorrent/script/.rtorrent.rc /home/$user
-chown gaaara:gaaara /home/gaaara/.rtorrent.rc
+chown $user:$user /home/gaaara/.rtorrent.rc
 
 sed -i.bak "s#PHPDIR=/home/salorium/Mediastorrent/script#PHPDIR=/home/$user/Mediastorrent/script#g;" /etc/init.d/rtorrent
 sed -i.bak "s/$debuglocalfile = false;/$debuglocalfile = true;/g;" /home/$user/Mediastorrent/config/Conf.php
