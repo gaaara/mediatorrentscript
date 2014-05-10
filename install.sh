@@ -3,6 +3,7 @@
 # Script d'installation MediasTorrent / Nginx
 #Liens du projet MediasTorrent " http://www.wareziens.net/forum/topic-21408-mediastorrent-un-front-end-multi-user-multi-seedbox-multi-medias-page-1.html "
 #le support du script c'est ici http://forum.mediastorrent.com/index.php/Thread/9-Script-support/ 
+##############Merci a salorium pour sons aide#################
 clear
  
     if [ $(id -u) -ne 0 ]
@@ -14,7 +15,7 @@ clear
     fi
  
     # demander nom et mot de passe
-    echo "le mot de passe doit contenir au moins 8 caractères au moin 1 chiffre et une majuscule ou caractère spécial"
+    echo "Au moins 8 caractères avec une lettre majuscule, un chiffre / un caractère spécial."
     echo ""
     read -p "Entrer votre nom d'utilisateur: " user
     read -s -p "Enter vottre mot de passe: " pwd
@@ -173,4 +174,17 @@ sleep 3
 php /home/$user/Mediastorrent/script/inituser.php $user $pwd $mail  $ip/Mediastorrent seedadmin 5001
 
 service apache2 restart
+clear
+
+# Demarrage de rtorrent
 /etc/init.d/rtorrent start $user 5001
+echo "--"
+echo " =========== FIN DE L'INSTALLATION ! On dirait que tout a fonctionne ! ==="
+echo "Username :$user"
+echo "Password :${pwd}"
+echo "Mysql password :$pwdr"
+echo "Votre email :$mail"
+echo "-------------------------------"
+echo "-------------------------------"
+echo "Maintenant, rendez-vous sur Rutorrent"
+echo "https://$ip/rutorrent/"
