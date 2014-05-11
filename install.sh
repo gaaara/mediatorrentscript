@@ -1,6 +1,8 @@
 #!/bin/bash
 # Bash Menu
 
+clear
+
 echo "Mediastorrent installation Script"
 
 PS3='entrez votre chois: '
