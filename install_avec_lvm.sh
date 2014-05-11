@@ -123,7 +123,7 @@ fi
 ip=$(ip addr | grep eth0 | grep inet | awk '{print $2}' | cut -d/ -f1)
 
 ##Log de l'instalation
-exec 2>/home/$user/log
+exec 2> $homedir/log
 
 $packetg update
 $packetg safe-upgrade -y
@@ -183,7 +183,7 @@ a2enmod rewrite
 service apache2 restart
 cd $homedir
 git clone -b Dev  https://github.com/salorium/Mediastorrent.git
-ln -s /home/$user/Mediastorrent /var/www/Mediastorrent
+ln -s $Mediastorrent /var/www/Mediastorrent
 
 ##Configuration d'apache2
 mv /etc/apache2/sites-available/default  /etc/apache2/sites-available/default.bak
@@ -227,8 +227,8 @@ mkdir -p rtorrent/data
 mkdir -p rtorrent/session
 
 ##permissions
-chown -R $user:$user /home/$user
-chmod 755  home/$user
+chown -R $user:$user $homedir
+chmod 755  $homedir
 chmod -R a+w  $Mediastorrent/config/Conf.php
 chmod -R a+w  $Mediastorrent/log
 chmod -R a+w  $Mediastorrent/cache
