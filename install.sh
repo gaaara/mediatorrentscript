@@ -18,6 +18,10 @@ do
              bash install_avec_lvm.sh
              break
             ;;
+         "Logiciel optionnelle")
+             echo "pas disponible"
+             break
+            ;;
         "Quit")
             break
             ;;
