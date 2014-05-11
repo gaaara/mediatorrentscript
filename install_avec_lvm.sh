@@ -13,7 +13,6 @@ echo ""
 echo "http://forum.mediastorrent.com/index.php/Board/2-Informations/"
 echo ""
 read -p "avez vous installer et configurer lvm (Y/N)?"
-
 [ "$(echo $REPLY | tr [:upper:] [:lower:])" == "y" ] || exit
 
 clear
