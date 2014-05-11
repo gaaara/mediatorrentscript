@@ -5,6 +5,16 @@
 #le support du script c'est ici http://forum.mediastorrent.com/index.php/Thread/9-Script-support/ 
 ##############Merci a salorium pour sons aide#################
 clear
+
+echo "Dépendence obligatoir avoir installer et configurer lvm"
+echo ""
+echo "http://forum.mediastorrent.com/index.php/Board/2-Informations/"
+echo ""
+read -p "avez vous installer et configurer lvm (Y/N)?"
+
+[ "$(echo $REPLY | tr [:upper:] [:lower:])" == "y" ] || exit
+
+
     # Fonction d'affichage de l'erreur du mdp
 mdperreur() {
         echo "Mot de passe invalide"
