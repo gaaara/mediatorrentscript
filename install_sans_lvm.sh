@@ -101,12 +101,12 @@ fi
 
 if [ -z $initd ]
 then
-        initd="/etc/init.d/"
+        initd="/etc/init.d"
 fi
 
 if [ -z $rtorrentall ]
 then
-        rtorrentall="/home/$user/Mediastorrent/blob/Dev/script/"
+        rtorrentall="/home/$user/Mediastorrent/blob/Dev/script"
 fi
 
 
