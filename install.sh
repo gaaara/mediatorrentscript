@@ -199,7 +199,7 @@ chmod -R a+w /home/$user/Mediastorrent/cache
 cp /home/$user/Mediastorrent/script/rtorrent /etc/init.d
 chmod a+x /etc/init.d/rtorrent
 cp /home/$user/Mediastorrent/script/.rtorrent.rc /home/$user
-chown $user:$user /home/gaaara/.rtorrent.rc
+chown $user:$user /home/$user/.rtorrent.rc
 
 sed -i.bak "s#PHPDIR=/home/salorium/Mediastorrent/script#PHPDIR=/home/$user/Mediastorrent/script#g;" /etc/init.d/rtorrent
 sed -i.bak "s/$debuglocalfile = false;/$debuglocalfile = true;/g;" /home/$user/Mediastorrent/config/Conf.php
