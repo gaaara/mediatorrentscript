@@ -90,17 +90,17 @@ fi
 
 if [ -z $script ]
 then
-        homedir="/home/$user/Mediastorrent/script"
+        script="/home/$user/Mediastorrent/script"
 fi
 
 if [ -z $Mediastorrent ]
 then
-        homedir="/home/$user/Mediastorrent"
+        Mediastorrent="/home/$user/Mediastorrent"
 fi
 
 if [ -z $initd ]
 then
-        homedir="/etc/init.d/"
+        initd="/etc/init.d/"
 fi
 
 ip=$(ip addr | grep eth0 | grep inet | awk '{print $2}' | cut -d/ -f1)
@@ -211,24 +211,24 @@ mkdir -p rtorrent/session
 
 ##permissions
 chown -R $user:$user /home/$user
-chmod 755 /home/$user
-chmod -R a+w /$Mediastorrent/config/Conf.php
-chmod -R a+w /$Mediastorrent/log
-chmod -R a+w /$Mediastorrent/cache
+chmod 755  home/$user
+chmod -R a+w  $Mediastorrent/config/Conf.php
+chmod -R a+w  $Mediastorrent/log
+chmod -R a+w  $Mediastorrent/cache
 
 
 #copie de fichier 
-cp /$script/rtorrent /etc/init.d
-chmod a+x /$initd/rtorrent
-cp /home/$script/.rtorrent.rc /$homedir
+cp  $script/rtorrent /etc/init.d
+chmod a+x  $initd/rtorrent
+cp /home/$script/.rtorrent.rc  $homedir
 chown $user:$user /$homedir/.rtorrent.rc
 
 sed -i.bak "s#PHPDIR=/home/salorium/Mediastorrent/script#PHPDIR=/home/$user/Mediastorrent/script#g;" /etc/init.d/rtorrent
 sed -i.bak "s/$debuglocalfile = false;/$debuglocalfile = true;/g;" /home/$user/Mediastorrent/config/Conf.php
 
-php /$script/preparebbd.php localhost root $pwdr
+php  $script/preparebbd.php localhost root $pwdr
 sleep 3
-php /$script/inituser.php $user $pwd $mail  $ip/Mediastorrent seedadmin 5001
+php  $script/inituser.php $user $pwd $mail  $ip/Mediastorrent seedadmin 5001
 
 service apache2 restart
 clear
