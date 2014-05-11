@@ -4,15 +4,15 @@
 echo "Mediastorrent installation Script"
 
 PS3='entrez votre chois: '
-options=("Installation avec lvm" "Installation sans lvm" "Quit")
+options=("Installation sans lvm" "Installation avec lvm" "Quit")
 select opt in "${options[@]}"
 do
     case $opt in
-        "Installation avec lvm")
+        "Installation sans lvm")
             bash install_sans_lvm.sh
             break
             ;;
-        "Installation sans lvm")
+        "Installation avec lvm")
              echo "non disponible dsl"
              break
             ;;
