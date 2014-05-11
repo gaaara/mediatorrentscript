@@ -240,6 +240,8 @@ sleep 3
 php  $script/inituser.php $user $pwd $mail  $ip/Mediastorrent seedadmin 5001
 
 service apache2 restart
+
+echo "/etc/init.d/rtorrent \$1"$login >> /etc/init.d/rtorrentall
 clear
 
 # Demarrage de rtorrent
