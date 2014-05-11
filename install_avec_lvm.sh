@@ -16,6 +16,7 @@ read -p "avez vous installer et configurer lvm (Y/N)?"
 
 [ "$(echo $REPLY | tr [:upper:] [:lower:])" == "y" ] || exit
 
+clear
 
     # Fonction d'affichage de l'erreur du mdp
 mdperreur() {
