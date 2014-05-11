@@ -15,7 +15,7 @@ do
             break
             ;;
         "Installation avec lvm")
-             echo "non disponible dsl"
+             echo "install_avec_lvm.sh"
              break
             ;;
         "Quit")
