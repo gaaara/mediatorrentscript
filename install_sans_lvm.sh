@@ -90,7 +90,7 @@ $packetg update
 $packetg safe-upgrade -y
 $packetg install -y  git-core memcached autoconf build-essential comerr-dev libcloog-ppl-dev libcppunit-dev 
 $packetg install -y  libcurl3 libcurl4-openssl-dev libncurses5-dev ncurses-base ncurses-term libterm-readline-gnu-perl
-$packetg install -y  dtach libsigc++-2.0-dev libssl-dev libtool libxml2-dev subversion curl
+$packetg install -y  dtach libsigc++-2.0-dev libssl-dev libtool libxml2-dev subversion curl libssh2-php
 $packetg install -y  apache2 libapache2-mod-php5 php5-mysqlnd php5-json php5-imagick php5-memcached php5-curl
 
 #install mysql-server
