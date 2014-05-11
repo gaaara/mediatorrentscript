@@ -15,7 +15,6 @@ echo ""
 read -p "avez vous installer et configurer lvm (Y/N)?"
 [ "$(echo $REPLY | tr [:upper:] [:lower:])" == "y" ] || exit
 
-clear
 
     # Fonction d'affichage de l'erreur du mdp
 mdperreur() {
@@ -92,6 +91,34 @@ else
         packetg="apt-get"
 fi
 
+# dossier variable 
+
+
+if [ -z $homedir ]
+then
+        homedir="/home/$user"
+fi
+
+if [ -z $script ]
+then
+        script="/home/$user/Mediastorrent/script"
+fi
+
+if [ -z $Mediastorrent ]
+then
+        Mediastorrent="/home/$user/Mediastorrent"
+fi
+
+if [ -z $initd ]
+then
+        initd="/etc/init.d/"
+fi
+
+if [ -z $rtorrentall ]
+then
+        rtorrentall="/home/$user/Mediastorrent/blob/Dev/script/"
+fi
+
 
 ip=$(ip addr | grep eth0 | grep inet | awk '{print $2}' | cut -d/ -f1)
 
@@ -154,7 +181,7 @@ ldconfig
 
 a2enmod rewrite
 service apache2 restart
-cd /home/$user
+cd $homedir
 git clone -b Dev  https://github.com/salorium/Mediastorrent.git
 ln -s /home/$user/Mediastorrent /var/www/Mediastorrent
 
@@ -201,26 +228,31 @@ mkdir -p rtorrent/session
 
 ##permissions
 chown -R $user:$user /home/$user
-chmod 755 /home/$user
-chmod -R a+w /home/$user/Mediastorrent/config/Conf.php
-chmod -R a+w /home/$user/Mediastorrent/log
-chmod -R a+w /home/$user/Mediastorrent/cache
+chmod 755  home/$user
+chmod -R a+w  $Mediastorrent/config/Conf.php
+chmod -R a+w  $Mediastorrent/log
+chmod -R a+w  $Mediastorrent/cache
 
 
 #copie de fichier 
-cp /home/$user/Mediastorrent/script/rtorrent /etc/init.d
-chmod a+x /etc/init.d/rtorrent
-cp /home/$user/Mediastorrent/script/.rtorrent.rc /home/$user
-chown $user:$user /home/$user/.rtorrent.rc
+cp $rtorrentall/rtorrentall $initd
+chmod +x $initd/rtorrentall
+update-rc.d rtorrentall defaults
+cp  $script/rtorrent /etc/init.d
+chmod a+x  $initd/rtorrent
+cp /home/$script/.rtorrent.rc  $homedir
+chown $user:$user /$homedir/.rtorrent.rc
 
 sed -i.bak "s#PHPDIR=/home/salorium/Mediastorrent/script#PHPDIR=/home/$user/Mediastorrent/script#g;" /etc/init.d/rtorrent
 sed -i.bak "s/$debuglocalfile = false;/$debuglocalfile = true;/g;" /home/$user/Mediastorrent/config/Conf.php
 
-php /home/$user/Mediastorrent/script/preparebbd.php localhost root $pwdr
+php  $script/preparebbd.php localhost root $pwdr
 sleep 3
-php /home/$user/Mediastorrent/script/inituser.php $user $pwd $mail  $ip/Mediastorrent seedadmin 5001
+php  $script/inituser.php $user $pwd $mail  $ip/Mediastorrent seedadmin 5001
 
 service apache2 restart
+
+echo "/etc/init.d/rtorrent \$1"$login >> /etc/init.d/rtorrentall
 clear
 
 # Demarrage de rtorrent
