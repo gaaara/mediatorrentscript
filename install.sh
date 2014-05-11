@@ -15,7 +15,7 @@ do
             break
             ;;
         "Installation avec lvm")
-             echo "install_avec_lvm.sh"
+             bash install_avec_lvm.sh
              break
             ;;
         "Quit")
