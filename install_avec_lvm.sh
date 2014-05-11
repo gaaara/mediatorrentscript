@@ -6,6 +6,8 @@
 ##############Merci a salorium pour sons aide#################
 clear
 
+echo "le script n'est pas pret faite n a la question pour quitter "
+echo ""
 echo "Dépendence obligatoir avoir installer et configurer lvm"
 echo ""
 echo "http://forum.mediastorrent.com/index.php/Board/2-Informations/"
