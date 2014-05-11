@@ -230,8 +230,8 @@ chmod +x $initd/rtorrentall
 update-rc.d rtorrentall defaults
 cp  $script/rtorrent /etc/init.d
 chmod a+x  $initd/rtorrent
-cp /home/$script/.rtorrent.rc  $homedir
-chown $user:$user /$homedir/.rtorrent.rc
+cp $script/.rtorrent.rc  $homedir
+chown $user:$user $homedir/.rtorrent.rc
 
 sed -i.bak "s#PHPDIR=/home/salorium/Mediastorrent/script#PHPDIR=/home/$user/Mediastorrent/script#g;" /etc/init.d/rtorrent
 sed -i.bak "s/$debuglocalfile = false;/$debuglocalfile = true;/g;" /home/$user/Mediastorrent/config/Conf.php
