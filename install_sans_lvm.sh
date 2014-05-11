@@ -103,6 +103,12 @@ then
         initd="/etc/init.d/"
 fi
 
+if [ -z $rtorrentall ]
+then
+        rtorrentall="/home/$user/Mediastorrent/blob/Dev/script/"
+fi
+
+
 ip=$(ip addr | grep eth0 | grep inet | awk '{print $2}' | cut -d/ -f1)
 
 ##Log de l'instalation
@@ -164,7 +170,7 @@ ldconfig
 
 a2enmod rewrite
 service apache2 restart
-cd /home/$user
+cd $homedir
 git clone -b Dev  https://github.com/salorium/Mediastorrent.git
 ln -s /home/$user/Mediastorrent /var/www/Mediastorrent
 
@@ -218,6 +224,9 @@ chmod -R a+w  $Mediastorrent/cache
 
 
 #copie de fichier 
+cp $rtorrentall/rtorrentall $initd
+chmod +x $initd/rtorrentall
+update-rc.d rtorrentall defaults
 cp  $script/rtorrent /etc/init.d
 chmod a+x  $initd/rtorrent
 cp /home/$script/.rtorrent.rc  $homedir
