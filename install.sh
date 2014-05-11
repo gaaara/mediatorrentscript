@@ -6,7 +6,7 @@ clear
 echo "Mediastorrent installation Script"
 
 PS3='entrez votre chois: '
-options=("Installation sans lvm" "Installation avec lvm" "Quit")
+options=("Installation sans lvm" "Installation avec lvm" "Logiciel optionnelle" "Quit")
 select opt in "${options[@]}"
 do
     case $opt in
