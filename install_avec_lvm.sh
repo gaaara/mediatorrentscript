@@ -79,7 +79,7 @@ mdperreur() {
     read -p "votre email : " mail
     
     #root mysql password generator 
- pwdr=$(cat /dev/urandom | tr -dc 'a-zA-Z0-9' | fold -w 32 | head -n 1)
+ pwdr=$(cat /dev/urandom | tr -dc 'a-zA-Z0-9'[:graph:] | fold -w 32 | head -n 1)
 
  # gestionnaire de paquet
 if [ "`dpkg --status aptitude | grep Status:`" == "Status: install ok installed" ]
