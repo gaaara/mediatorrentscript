@@ -68,10 +68,8 @@ mdperreur() {
     echo ""
     read -p "votre email : " mail
     
-    #mysql root
-    echo "entrez un mot de passe complex pour mysql root" 
-    echo""
-    read -p "root mysql password : " pwdr
+    #root mysql password generator 
+ pwdr=$(cat /dev/urandom | tr -dc 'a-zA-Z0-9'[:graph:] | fold -w 32 | head -n 1)
 
  # gestionnaire de paquet
 if [ "`dpkg --status aptitude | grep Status:`" == "Status: install ok installed" ]
@@ -249,10 +247,10 @@ clear
 /etc/init.d/rtorrent start $user 5001
 echo "--"
 echo " =========== FIN DE L'INSTALLATION ! On dirait que tout a fonctionne ! ==="
-echo "Username :$user"
-echo "Password :${pwd}"
-echo "Mysql password :$pwdr"
-echo "Votre email :$mail"
+echo "Username :  $user"
+echo "Password :  ${pwd}"
+echo "Mysql password :  $pwdr"
+echo "Votre email :  $mail"
 echo "-------------------------------"
 echo "-------------------------------"
 echo "Maintenant, rendez-vous sur Mediastorrent"
