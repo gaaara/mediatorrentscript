@@ -240,9 +240,10 @@ cp  $script/rtorrent /etc/init.d
 chmod a+x  $initd/rtorrent
 cp $script/.rtorrent.rc  $homedir
 chown $user:$user $homedir/.rtorrent.rc
-
-sed -i.bak "s#PHPDIR=/home/salorium/Mediastorrent/script#PHPDIR=/home/$user/Mediastorrent/script#g;" /etc/init.d/rtorrent
-sed -i.bak "s/$debuglocalfile = false;/$debuglocalfile = true;/g;" /home/$user/Mediastorrent/config/Conf.php
+ 
+sed -i.bak "s#PHPDIR=/home/salorium/Mediastorrent/script#PHPDIR=/home/$user/Mediastorrent/script#g;" $initd/rtorrent
+sed -i.bak "s/$debuglocalfile = false;/$debuglocalfile = true;/g;" $Mediastorrent/config/Conf.php
+sed -i.bak "s/$install = true;/$install = false;/g;"  $Mediastorrent/config
 
 php  $script/preparebbd.php localhost root $pwdr
 sleep 3
