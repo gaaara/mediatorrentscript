@@ -102,12 +102,6 @@ then
         initd="/etc/init.d"
 fi
 
-if [ -z $rtorrentall ]
-then
-        rtorrentall="/home/$user/Mediastorrent/blob/Dev/script"
-fi
-
-
 ip=$(ip addr | grep eth0 | grep inet | awk '{print $2}' | cut -d/ -f1)
 
 ##Log de l'instalation
@@ -223,7 +217,7 @@ chmod -R a+w  $Mediastorrent/cache
 
 
 #copie de fichier 
-cp $rtorrentall/rtorrentall $initd
+cp $script/rtorrentall $initd
 chmod +x $initd/rtorrentall
 update-rc.d rtorrentall defaults
 cp  $script/rtorrent /etc/init.d
@@ -233,7 +227,7 @@ chown $user:$user $homedir/.rtorrent.rc
 
 sed -i.bak "s#PHPDIR=/home/salorium/Mediastorrent/script#PHPDIR=/home/$user/Mediastorrent/script#g;" $initd/rtorrent
 sed -i.bak "s/$debuglocalfile = false;/$debuglocalfile = true;/g;" $Mediastorrent/config/Conf.php
-sed -i.bak "s/$install = true;/$install = false;/g;"  $Mediastorrent/config
+sed -i.bak "s/$install = true;/$install = false;/g;"  $Mediastorrent/config/Conf.php
 
 
 php  $script/preparebbd.php localhost root $pwdr
