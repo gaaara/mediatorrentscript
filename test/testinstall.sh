@@ -140,6 +140,8 @@ then
         initd="/etc/init.d"
 fi
 
+mkdir /var/www
+
 ip=$(ip addr | grep eth0 | grep inet | awk '{print $2}' | cut -d/ -f1)
 
 ##Log de l'instalation
