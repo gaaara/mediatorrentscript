@@ -1,6 +1,6 @@
 #!/bin/bash
 #
-# Script d'installation MediasTorrent / Nginx
+# Script d'installation MediasTorrent / apache
 #Liens du projet MediasTorrent " http://www.wareziens.net/forum/topic-21408-mediastorrent-un-front-end-multi-user-multi-seedbox-multi-medias-page-1.html "
 #le support du script c'est ici http://forum.mediastorrent.com/index.php/Thread/9-Script-support/ 
 ##############Merci a salorium pour sons aide#################
