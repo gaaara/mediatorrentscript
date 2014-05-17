@@ -1,22 +1,12 @@
 #!/bin/bash
 #
-# Script d'installation MediasTorrent / Nginx
+# Script d'installation MediasTorrent / apache
 #Liens du projet MediasTorrent " http://www.wareziens.net/forum/topic-21408-mediastorrent-un-front-end-multi-user-multi-seedbox-multi-medias-page-1.html "
 #le support du script c'est ici http://forum.mediastorrent.com/index.php/Thread/9-Script-support/ 
 ##############Merci a salorium pour sons aide#################
 clear
 
-echo "le script n'est pas pret faite n a la question pour quitter "
-echo ""
-echo "Dépendence obligatoir avoir installer et configurer lvm"
-echo ""
-echo "http://forum.mediastorrent.com/index.php/Board/2-Informations/"
-echo ""
-read -p "avez vous installer et configurer lvm (Y/N)?"
-[ "$(echo $REPLY | tr [:upper:] [:lower:])" == "y" ] || exit
-
-
-    # Fonction d'affichage de l'erreur du mdp
+ # Fonction d'affichage de l'erreur du mdp
 mdperreur() {
         echo "Mot de passe invalide"
         echo "Votre mot de passe doit contenir impérativement une majuscule, une miniscule, un chiffre et avoir une longueur minimum de 8 caractère"
@@ -81,34 +71,6 @@ mdperreur() {
     #root mysql password generator 
  pwdr=$(cat /dev/urandom | tr -dc 'a-zA-Z0-9'[:graph:] | fold -w 32 | head -n 1)
 
-
-# Ajoute des dépots non-free Debian
-echo "#dépôt paquet propriétaire
-deb http://ftp2.fr.debian.org/debian/ wheezy main non-free
-deb-src http://ftp2.fr.debian.org/debian/ wheezy main non-free
-
-# dépôt dotdeb php 5.5
-deb http://packages.dotdeb.org wheezy-php55 all
-deb-src http://packages.dotdeb.org wheezy-php55 all
-
-# dépôt nginx
-deb http://nginx.org/packages/debian/ wheezy nginx
-deb-src http://nginx.org/packages/debian/ wheezy nginx ">> /etc/apt/sources.list
-
-#Ajout des clée
-
-##dotdeb
-cd /tmp
-wget http://www.dotdeb.org/dotdeb.gpg
-apt-key add dotdeb.gpg
-
-##nginx
-cd /tmp
-wget http://nginx.org/keys/nginx_signing.key
-apt-key add nginx_signing.key
-
-
-
  # gestionnaire de paquet
 if [ "`dpkg --status aptitude | grep Status:`" == "Status: install ok installed" ]
 then
@@ -140,8 +102,6 @@ then
         initd="/etc/init.d"
 fi
 
-mkdir /var/www
-
 ip=$(ip addr | grep eth0 | grep inet | awk '{print $2}' | cut -d/ -f1)
 
 ##Log de l'instalation
@@ -152,7 +112,7 @@ $packetg safe-upgrade -y
 $packetg install -y  git-core memcached autoconf build-essential comerr-dev libcloog-ppl-dev libcppunit-dev 
 $packetg install -y  libcurl3 libcurl4-openssl-dev libncurses5-dev ncurses-base ncurses-term libterm-readline-gnu-perl
 $packetg install -y  dtach libsigc++-2.0-dev libssl-dev libtool libxml2-dev subversion curl libssh2-php
-$packetg install -y  php5 php5-cli php5-fpm php5-curl php5-geoip php5-mysqlnd php5-json php5-imagick php5-memcached php5-curl
+$packetg install -y  apache2 libapache2-mod-php5 php5-mysqlnd php5-json php5-imagick php5-memcached php5-curl
 
 #install mysql-server
 echo "mysql-server-5.1 mysql-server/root_password password $pwdr" | debconf-set-selections
@@ -207,7 +167,42 @@ cd $homedir
 git clone -b Dev  https://github.com/salorium/Mediastorrent.git
 ln -s $Mediastorrent /var/www/Mediastorrent
 
+##Configuration d'apache2
+mv /etc/apache2/sites-available/default  /etc/apache2/sites-available/default.bak
+cat <<'EOF' >    /etc/apache2/sites-available/default
+<VirtualHost *:80>
+        ServerAdmin webmaster@localhost
 
+        DocumentRoot /var/www
+        <Directory />
+                Options FollowSymLinks
+                AllowOverride all
+        </Directory>
+        <Directory /var/www/>
+                Options Indexes FollowSymLinks MultiViews
+                AllowOverride all
+                Order allow,deny
+                allow from all
+        </Directory>
+
+        ScriptAlias /cgi-bin/ /usr/lib/cgi-bin/
+        <Directory "/usr/lib/cgi-bin">
+                AllowOverride None
+                Options +ExecCGI -MultiViews +SymLinksIfOwnerMatch
+                Order allow,deny
+                Allow from all
+        </Directory>
+
+        ErrorLog ${APACHE_LOG_DIR}/error.log
+
+        # Possible values include: debug, info, notice, warn, error, crit,
+        # alert, emerg.
+        LogLevel warn
+
+        CustomLog ${APACHE_LOG_DIR}/access.log combined
+</VirtualHost>
+
+EOF
 
 #crÃ©ation de dossier
 mkdir -p rtorrent/data 
@@ -229,10 +224,11 @@ cp  $script/rtorrent /etc/init.d
 chmod a+x  $initd/rtorrent
 cp $script/.rtorrent.rc  $homedir
 chown $user:$user $homedir/.rtorrent.rc
- 
+
 sed -i.bak "s#PHPDIR=/home/salorium/Mediastorrent/script#PHPDIR=/home/$user/Mediastorrent/script#g;" $initd/rtorrent
 sed -i.bak "s/$debuglocalfile = false;/$debuglocalfile = true;/g;" $Mediastorrent/config/Conf.php
 sed -i.bak "s/$install = true;/$install = false;/g;"  $Mediastorrent/config/Conf.php
+
 
 php  $script/preparebbd.php localhost root $pwdr
 sleep 3
