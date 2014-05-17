@@ -178,8 +178,7 @@ git clone -b Dev  https://github.com/salorium/Mediastorrent.git
 ln -s $Mediastorrent /var/www/Mediastorrent
 
 ##Configuration d'apache2
-mv /etc/apache2/sites-available/default  /etc/apache2/sites-available/default.bak
-cat <<'EOF' >    /etc/apache2/sites-available/default
+cat <<'EOF' >    /etc/apache2/sites-available/default-perso
 <VirtualHost *:80>
         ServerAdmin webmaster@localhost
 
@@ -213,6 +212,8 @@ cat <<'EOF' >    /etc/apache2/sites-available/default
 </VirtualHost>
 
 EOF
+
+a2ensite default-perso
 
 #crÃ©ation de dossier
 mkdir -p rtorrent/data 
