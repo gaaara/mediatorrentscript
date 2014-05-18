@@ -117,7 +117,7 @@ $packetg install -y  apache2 libapache2-mod-php5 php5-mysqlnd php5-json php5-ima
 #install mysql-server
 echo "mysql-server-5.1 mysql-server/root_password password $pwdr" | debconf-set-selections
 echo "mysql-server-5.1 mysql-server/root_password_again password $pwdr" | debconf-set-selections
-$packetg install -y install mysql-server
+$packetg -y install mysql-server
 
 
 ###########################################################
