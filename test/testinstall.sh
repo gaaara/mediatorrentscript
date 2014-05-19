@@ -171,6 +171,18 @@ cd $homedir
 git clone -b Dev  https://github.com/salorium/Mediastorrent.git
 ln -s $Mediastorrent /var/www/Mediastorrent
 
+if [ -f $debfiles ];
+then
+   echo "fichier $debfiles existe."
+   usefiles=$debfiles
+   
+else
+   echo "Fichier $debfiles existe pas."
+   usefiles=$ubfiles
+
+fi
+
+
 ##Configuration d'apache2
 mv $usefiles $usefiles.bak
 
