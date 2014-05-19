@@ -102,6 +102,10 @@ then
         initd="/etc/init.d"
 fi
 
+debfiles=/etc/apache2/sites-enabled/default
+ubfiles=/etc/apache2/sites-enabled/000-default.conf
+
+
 ip=$(ip addr | grep eth0 | grep inet | awk '{print $2}' | cut -d/ -f1)
 
 ##Log de l'instalation
@@ -168,8 +172,9 @@ git clone -b Dev  https://github.com/salorium/Mediastorrent.git
 ln -s $Mediastorrent /var/www/Mediastorrent
 
 ##Configuration d'apache2
-mv /etc/apache2/sites-available/default  /etc/apache2/sites-available/default.bak
-cat <<'EOF' >    /etc/apache2/sites-available/default
+mv $usefiles $usefiles.bak
+
+cat <<'EOF' >   $usefiles
 <VirtualHost *:80>
         ServerAdmin webmaster@localhost
 
